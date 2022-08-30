@@ -16,8 +16,19 @@ body > nav {
   padding: 0 20px 0 30px;
 }
 
-nav > img {
+/*nav > img {
   width: 34px;
   object-fit: contain;
   margin-right: auto;
+} */
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 34px;
+}
+
+.login img {
+  height: 30px;
 }

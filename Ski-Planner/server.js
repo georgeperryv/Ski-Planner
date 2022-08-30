@@ -3,9 +3,16 @@ var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
+var session = require('express-session')
+var passport = require('passport')
+require('dotenv').config()
+require('./config/database')
+require('./config/passport')
+// var methodOverride = require('method-override')
 
 var indexRouter = require('./routes/index')
 var usersRouter = require('./routes/users')
+// const { ServerResponse } = require('http')
 
 var server = express()
 
@@ -17,6 +24,24 @@ server.use(logger('dev'))
 server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
 server.use(cookieParser())
+// server.use(methodOverride('_method'))
+
+server.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true
+  })
+)
+server.use(passport.initialize())
+server.use(passport.session())
+
+server.use(function (req, res, next) {
+  //logged in user is in a user variable that's available inside all EJS templates. If no one is logged in, user will be undefined
+  res.locals.user = req.user
+  next()
+})
+
 server.use(express.static(path.join(__dirname, 'public')))
 
 server.use('/', indexRouter)
