@@ -12,6 +12,7 @@ require('./config/passport')
 
 var indexRouter = require('./routes/index')
 var usersRouter = require('./routes/users')
+var resourcesRouter = require('./routes/resources')
 // const { ServerResponse } = require('http')
 
 var server = express()
@@ -45,6 +46,7 @@ server.use(function (req, res, next) {
 server.use(express.static(path.join(__dirname, 'public')))
 
 server.use('/', indexRouter)
+server.use('/resources', resourcesRouter)
 server.use('/users', usersRouter)
 
 // catch 404 and forward to error handler
