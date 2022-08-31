@@ -1,9 +1,8 @@
 var express = require('express')
 var router = express.Router()
+const resourcesCtrl = require('../controllers/resources')
 
-/* GET users listing. */
-router.get('/', function (req, res, next) {
-  res.render('resources/index', { title: 'Resource-Page' })
-})
+// GET resources page
+router.get('/', resourcesCtrl.index)
 
 module.exports = router
