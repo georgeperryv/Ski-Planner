@@ -1,0 +1,8 @@
+<%- include('../partials/header') %>
+<p>
+  Your upcoming trip to
+  <a href="/resorts/<%= resort._id%>/resortName %>"><%=resort.resortName%></a>
+</p>
+<label><%= updateField %>:</label>
+<input type="text" name="<%=updateField%>" />
+<%- include('../partials/footer') %>

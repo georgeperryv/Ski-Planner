@@ -49,9 +49,17 @@ function show (req, res) {
   })
 }
 
+function displayField (req, res) {
+  Resort.findById(req.params.id, function (err, resort) {
+    const updateField = req.params.fieldChange
+    res.render('resorts/update', { title: 'Update Page', resort, updateField })
+  })
+}
+
 module.exports = {
   index,
   new: newResort,
   create,
-  show
+  show,
+  displayField
 }
