@@ -1,4 +1,26 @@
 <%- include('../partials/header') %>
+<table id="resort-list">
+  <thead>
+    <tr>
+      <th>Resort</th>
+      <th>Location</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% resortList.forEach(function(r) { %>
+    <tr>
+      <td><%= r.resortName %></td>
+      <td><%= r.location %></td>
+      <td><%= r.startDate %></td>
+      <td><%= r.endDate %></td>
+      <td><a href="/resorts/<%= r._id %>">DETAILS/UPDATE</a></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+
 <form id="review-page" action="/resorts/new" method="GET">
   <button type="submit">Add Destination</button>
 </form>

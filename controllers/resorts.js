@@ -1,7 +1,9 @@
 const Resort = require('../models/resort')
 
 function index (req, res) {
-  res.render('resorts/index', { title: 'Resorts-Page' })
+  Resort.find({}, function (err, resortList) {
+    res.render('resorts/index', { title: 'All Resorts', resortList })
+  })
 }
 
 function newResort (req, res) {
@@ -10,7 +12,8 @@ function newResort (req, res) {
 }
 
 function create (req, res) {
-  console.log(req.body)
+  const hasReview = req.body.review
+  console.log(hasReview)
   let skiMountain = Resort.create({
     resortName: req.body.resortName,
     location: req.body.location,
@@ -22,6 +25,7 @@ function create (req, res) {
     transportation: req.body.transportation,
     airport: req.body.airport,
     reviews: [
+      //will need to find a way to make this happen only if there is a review written
       {
         content: req.body.review,
         rating: req.body.rating,
