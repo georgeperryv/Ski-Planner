@@ -22,7 +22,7 @@ const resortSchema = new Schema(
     },
     location: String,
     startDate: {
-      type: Date,
+      type: String,
       required: true
       //   validate: {
       //     validator: function (v) {
@@ -34,7 +34,7 @@ const resortSchema = new Schema(
       //       'An event must be at least 1 day from now and not more than 90 days.'
       //   }
     },
-    endDate: Date,
+    endDate: String,
     passUsed: String,
     budget: Number,
     website: String,

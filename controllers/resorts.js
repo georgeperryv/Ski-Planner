@@ -8,7 +8,7 @@ function index (req, res) {
 }
 
 function newResort (req, res) {
-  var todayDate = new Date()
+  let todayDate = new Date() //https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript#:~:text=Use%20new%20Date()%20to,the%20current%20date%20and%20time.&text=This%20will%20give%20you%20today's,to%20whatever%20format%20you%20wish.
     .toJSON()
     .slice(0, 10)
     .replace(/-/g, '-')
@@ -17,12 +17,31 @@ function newResort (req, res) {
 }
 
 function create (req, res) {
+  //   const monthNames = [
+  //     'January',
+  //     'February',
+  //     'March',
+  //     'April',
+  //     'May',
+  //     'June',
+  //     'July',
+  //     'August',
+  //     'September',
+  //     'October',
+  //     'November',
+  //     'December'
+  //   ]
+  //   console.log('this is req.body.startDate', req.body.startDate)
+  //   let startDateTotal = new Date(req.body.startDate) //date object
+  //   console.log('the current month is ' + monthNames[startDateTotal.getMonth()])   could do this if you would rather have a full month
+  let stringStartDate = String(req.body.startDate)
+  //   let justStartDate = stringStartDateTotal.substring(0, 15)
+  //   console.log('this is justStardDate', justStartDate)
   const hasReview = req.body.review
-  console.log(hasReview)
   let skiMountain = Resort.create({
     resortName: req.body.resortName,
     location: req.body.location,
-    startDate: req.body.startDate,
+    startDate: stringStartDate,
     endDate: req.body.endDate,
     passUsed: req.body.passUsed,
     budget: req.body.budget,
