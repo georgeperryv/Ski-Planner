@@ -43,8 +43,15 @@ function create (req, res) {
   res.redirect('/resorts')
 }
 
+function show (req, res) {
+  Resort.findById(req.params.id, function (err, resort) {
+    res.render('resorts/show', { title: 'Trip Details', resort })
+  })
+}
+
 module.exports = {
   index,
   new: newResort,
-  create
+  create,
+  show
 }
