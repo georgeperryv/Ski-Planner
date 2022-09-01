@@ -16,6 +16,9 @@ const reviewSchema = new Schema(
 
 const resortSchema = new Schema(
   {
+    user: { type: Schema.Types.ObjectId, ref: 'User' },
+    userName: String,
+    userAvatar: String,
     resortName: {
       type: String,
       required: true

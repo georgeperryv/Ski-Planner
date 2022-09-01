@@ -11,11 +11,13 @@
   <tbody>
     <% resortList.forEach(function(r) { %>
     <tr>
+      
+      <% if (user && user._id.equals(r.user)) { %>
       <td><%= r.resortName %></td>
       <td><%= r.location %></td>
       <td><%= r.startDate %></td>
       <td><%= r.endDate %></td>
-      <td><a href="/resorts/<%= r._id %>/delete">DETAILS/UPDATE</a></td>
+      <td><a href="/resorts/<%= r._id %>">DETAILS/UPDATE</a></td>
       <td>
         <form
           id="delete"
@@ -25,7 +27,9 @@
           <button type="submit">Delete</button>
         </form>
       </td>
+      <% } %>
     </tr>
+
     <% }); %>
   </tbody>
 </table>

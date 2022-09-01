@@ -1,11 +1,12 @@
 var express = require('express')
 var router = express.Router()
-var resortsCtrl = require('../controllers/resorts')
+var reviewsCtrl = require('../controllers/reviews')
+const isLoggedIn = require('../config/auth')
 
 /* GET resorts list. */
-router.get('/', resortsCtrl.index)
+router.post('/:id/addReview', reviewsCtrl.create)
 
-router.get('/new', resortsCtrl.new)
+// router.get('/new', resortsCtrl.new)
 //   res.render('resorts/new', { title: 'Resorts-Page' })
 // })
 

@@ -1,4 +1,3 @@
-const resort = require('../models/resort')
 const Resort = require('../models/resort')
 
 function index (req, res) {
@@ -40,6 +39,9 @@ function create (req, res) {
   //   console.log('this is justStardDate', justStartDate)
   const hasReview = req.body.review
   let skiMountain = Resort.create({
+    user: req.user.id,
+    userName: req.user.name,
+    userAvatar: req.user.avatar,
     resortName: req.body.resortName,
     location: req.body.location,
     startDate: stringStartDate,
@@ -65,7 +67,7 @@ function create (req, res) {
   //     Resort.findById(req.params.id)
   //     item.reviews.push(req.body.review)
   //   }
-
+  console.log('this is resort', skiMountain)
   res.redirect('/resorts')
 }
 
@@ -73,6 +75,7 @@ function show (req, res) {
   Resort.findById(req.params.id, function (err, resort) {
     res.render('resorts/show', { title: 'Trip Details', resort })
     console.log('this is resort', resort)
+    console.log('this is resort.website', resort.website)
   })
 }
 
