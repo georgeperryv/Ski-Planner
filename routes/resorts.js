@@ -5,8 +5,10 @@ var resortsCtrl = require('../controllers/resorts')
 /* GET resorts list. */
 router.get('/', resortsCtrl.index)
 
+//GET page to ag new resort (right now this also includes a review)
 router.get('/new', resortsCtrl.new)
-//   res.render('resorts/new', { title: 'Resorts-Page' })
-// })
+
+//POST the results of the input to the database
+router.post('/new/add', resortsCtrl.create)
 
 module.exports = router

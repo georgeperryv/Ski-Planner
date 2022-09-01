@@ -1,8 +1,8 @@
 var express = require('express')
 var router = express.Router()
-const resourcesCtrl = require('../controllers/resources')
+const sourcesCtrl = require('../controllers/sources')
 
 // GET resources page
-router.get('/', resourcesCtrl.index)
+router.get('/', sourcesCtrl.index)
 
 module.exports = router

@@ -11,7 +11,7 @@ require('./config/passport')
 // var methodOverride = require('method-override')
 
 var indexRouter = require('./routes/index')
-var resourcesRouter = require('./routes/resources')
+var sourcesRouter = require('./routes/sources')
 var resortsRouter = require('./routes/resorts')
 var usersRouter = require('./routes/users')
 // const { ServerResponse } = require('http')
@@ -47,7 +47,7 @@ server.use(function (req, res, next) {
 server.use(express.static(path.join(__dirname, 'public')))
 
 server.use('/', indexRouter)
-server.use('/resources', resourcesRouter)
+server.use('/sources', sourcesRouter)
 server.use('/resorts', resortsRouter)
 server.use('/users', usersRouter)
 

@@ -1,5 +1,5 @@
 <%- include('../partials/header') %>
-<form id="add-resort-form" action="/resorts" method="POST">
+<form id="add-resort-form" action="/resorts/new/add" method="POST">
   <label>Resort Name:</label>
   <input type="text" name="resortName" />
   <label>Location:</label>
@@ -23,19 +23,20 @@
   <input type="text" name="transportation" />
   <label>Closest Airport:</label>
   <input type="text" name="airport" />
+  <label>Review:</label>
+  <input type="text" name="review" />
+  <select name="rating">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
   <button type="submit">Submit Destination</button>
 </form>
 
-<form id="add-review-form" action="/resorts/new" method="POST"></form>
-<label>Review:</label>
-<input type="text" name="reviews" />
-<select name="rating">
-  <option value="1">1</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-  <option value="5">5</option>
-</select>
-</form>
+<!-- <form id="add-review-form" action="/resorts/new" method="POST"></form>
+
+</form> -->
 
 <%- include('../partials/footer') %>
