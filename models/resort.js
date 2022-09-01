@@ -38,7 +38,7 @@ const resortSchema = new Schema(
     passUsed: String,
     budget: Number,
     website: String,
-    transporation: String,
+    transportation: String,
     airport: String,
     reviews: [reviewSchema]
   },

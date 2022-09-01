@@ -4,7 +4,27 @@
   <a href="/resorts/<%= resort._id%>/resortName %>"><%=resort.resortName%></a>
   in
   <a href="/resorts/<%= resort._id%>/location %>"><%=resort.location%></a>
+  is scheduled for
+  <a href="/resorts/<%= resort._id%>/startDate %>"><%=resort.startDate%></a>
+  to
+  <a href="/resorts/<%= resort._id%>/endDate %>"><%=resort.endDate%></a>
+  . This ticket will be purchased through the
+  <a href="/resorts/<%= resort._id%>/passUsed %>"><%=resort.passUsed%></a>
+  and you are budgeting $
+  <a href="/resorts/<%= resort._id%>/budget %>"><%=resort.budget%></a>
+  for this trip. You are planning to
+  <a href="/resorts/<%= resort._id%>/transportation%>"
+    ><%=resort.transportation%></a
+  >
+  to the resort <% if (resort.transportation === 'Fly'){ %> via
+  <a href="/resorts/<%= resort._id%>/airport%>"><%=resort.airport%></a>
+  <% } %>
 </p>
+<br />
+<br />
+<label>Link to Website For More Information:</label>
+<a href="<%= resort.website %>"></a>
+
 <%- include('../partials/footer') %>
 
 <!-- located in **Colorado, US** is scheduled for **December 5th to December 7th**. 

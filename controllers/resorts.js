@@ -35,6 +35,7 @@ function create (req, res) {
   //   let startDateTotal = new Date(req.body.startDate) //date object
   //   console.log('the current month is ' + monthNames[startDateTotal.getMonth()])   could do this if you would rather have a full month
   let stringStartDate = String(req.body.startDate)
+  let stringEndDate = String(req.body.endDate)
   //   let justStartDate = stringStartDateTotal.substring(0, 15)
   //   console.log('this is justStardDate', justStartDate)
   const hasReview = req.body.review
@@ -42,7 +43,7 @@ function create (req, res) {
     resortName: req.body.resortName,
     location: req.body.location,
     startDate: stringStartDate,
-    endDate: req.body.endDate,
+    endDate: stringEndDate,
     passUsed: req.body.passUsed,
     budget: req.body.budget,
     website: req.body.website,
@@ -59,6 +60,7 @@ function create (req, res) {
       }
     ]
   })
+
   //   if (req.body.review) {
   //     Resort.findById(req.params.id)
   //     item.reviews.push(req.body.review)
@@ -70,6 +72,7 @@ function create (req, res) {
 function show (req, res) {
   Resort.findById(req.params.id, function (err, resort) {
     res.render('resorts/show', { title: 'Trip Details', resort })
+    console.log('this is resort', resort)
   })
 }
 
@@ -85,12 +88,12 @@ function update (req, res) {
   Resort.findById(req.params.id, function (err, resort) {
     let updateField = req.params.fieldChange
     resort[updateField] = req.body[updateField]
-    console.log('this is resort.resortName', resort.resortName)
-    console.log('this is updateField', updateField)
-    console.log('this is resort.updateField', resort.updateField)
-    console.log('just req.body', req.body)
-    console.log('This is req.body.updateField', req.body.updateField)
-    console.log('This is resort', resort)
+    // console.log('this is resort.resortName', resort.resortName)
+    // console.log('this is updateField', updateField)
+    // console.log('this is resort.updateField', resort.updateField)
+    // console.log('just req.body', req.body)
+    // console.log('This is req.body.updateField', req.body.updateField)
+    // console.log('This is resort', resort)
     Resort.create(resort) //I think what is happening here is when I craete a new document with the same exact ID as the other
     //(but different parameters depending on what was typed), it replaces the old because there can't be two with the same Id
     res.redirect(`/resorts/${resort._id}`)

@@ -5,23 +5,26 @@
   <label>Location:</label>
   <input type="text" name="location" />
   <label>Start Date:</label>
-  <input type="date" name="startDate" min="<%=todayDate%>" /> 
+  <input type="date" name="startDate" min="<%=todayDate%>" />
   <label>End Date:</label>
   <input type="date" name="endDate" min="<%=todayDate%>" />
   <label>Pass Used:</label>
   <select name="passUsed">
-    <option value="Epic">Epic</option>
-    <option value="Ikon">Ikon</option>
+    <option value="Epic Pass">Epic Pass</option>
+    <option value="Ikon Pass">Ikon</option>
     <option value="Resort">Resort</option>
-    <option value="Other">Other</option>
   </select>
   <label>Budget:</label>
   <input type="number" name="budget" />
   <label>Website:</label>
   <input type="text" name="website" />
   <label>Transportation:</label>
-  <input type="text" name="transportation" />
-  <label>Closest Airport:</label>
+  <select name="transportation">
+    <option value="Fly">Fly</option>
+    <option value="Drive">Drive</option>
+    <option value="Train">Train</option>
+  </select>
+  <label>Airport:</label>
   <input type="text" name="airport" />
   <label>Review:</label>
   <input type="text" name="review" />
