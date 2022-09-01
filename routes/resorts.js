@@ -20,4 +20,7 @@ router.post('/new/add', resortsCtrl.create)
 //PUT (update the existing information) for a resort based on what a user types in
 router.put('/:id/:fieldChange', resortsCtrl.update)
 
+//DELETE
+router.delete('/:id', resortsCtrl.delete)
+
 module.exports = router

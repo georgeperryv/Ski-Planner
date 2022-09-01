@@ -15,7 +15,16 @@
       <td><%= r.location %></td>
       <td><%= r.startDate %></td>
       <td><%= r.endDate %></td>
-      <td><a href="/resorts/<%= r._id %>">DETAILS/UPDATE</a></td>
+      <td><a href="/resorts/<%= r._id %>/delete">DETAILS/UPDATE</a></td>
+      <td>
+        <form
+          id="delete"
+          action="/resorts/<%= r._id%>/?_method=DELETE"
+          method="POST"
+        >
+          <button type="submit">Delete</button>
+        </form>
+      </td>
     </tr>
     <% }); %>
   </tbody>

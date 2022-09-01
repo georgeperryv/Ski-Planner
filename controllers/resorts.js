@@ -116,11 +116,33 @@ function update (req, res) {
 //   res.redirect(`/resorts/${resort._id}`)
 // }
 
+function deleteResort (req, res) {
+  console.log('im in resort')
+  Resort.findOne({ _id: req.params.id }).then(function (resort) {
+    resort.remove()
+    res.redirect('/resorts')
+
+    //     const review = movie.reviews.id(req.params.id)
+    //     if (!review.user.equals(req.user._id))
+    //       return res.redirect(`/movies/${movie._id}`)
+    //     review.remove()
+    //     movie
+    //       .save()
+    //       .then(function () {
+    //         res.redirect(`/movies/${movie._id}`)
+    //       })
+    //       .catch(function (error) {
+    //         return next(error)
+    //       })
+  })
+}
+
 module.exports = {
   index,
   new: newResort,
   create,
   show,
   displayField,
-  update
+  update,
+  delete: deleteResort
 }
