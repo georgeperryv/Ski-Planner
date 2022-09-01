@@ -8,8 +8,12 @@ function index (req, res) {
 }
 
 function newResort (req, res) {
-  res.render('resorts/new', { title: 'Add-Resort' })
-  console.log('inside newResort')
+  var todayDate = new Date()
+    .toJSON()
+    .slice(0, 10)
+    .replace(/-/g, '-')
+  console.log('this is todays date', todayDate)
+  res.render('resorts/new', { title: 'Add-Resort', todayDate })
 }
 
 function create (req, res) {
@@ -68,7 +72,8 @@ function update (req, res) {
     console.log('just req.body', req.body)
     console.log('This is req.body.updateField', req.body.updateField)
     console.log('This is resort', resort)
-    Resort.create(resort)
+    Resort.create(resort) //I think what is happening here is when I craete a new document with the same exact ID as the other
+    //(but different parameters depending on what was typed), it replaces the old because there can't be two with the same Id
     res.redirect(`/resorts/${resort._id}`)
   })
 }

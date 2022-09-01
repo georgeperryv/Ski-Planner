@@ -5,9 +5,9 @@
   <label>Location:</label>
   <input type="text" name="location" />
   <label>Start Date:</label>
-  <input type="datetime-local" name="startDate" />
+  <input type="date" name="startDate" min="<%=todayDate%>" />
   <label>End Date:</label>
-  <input type="datetime-local" name="endDate" />
+  <input type="date" name="endDate" min="<%=todayDate%>" />
   <label>Pass Used:</label>
   <select name="passUsed">
     <option value="Epic">Epic</option>
@@ -38,5 +38,7 @@
 <!-- <form id="add-review-form" action="/resorts/new" method="POST"></form>
 
 </form> -->
+
+<!-- min="<?php echo date("Y-m-d"); ?>" -->
 
 <%- include('../partials/footer') %>
