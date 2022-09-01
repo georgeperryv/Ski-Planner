@@ -1,3 +1,4 @@
+const resort = require('../models/resort')
 const Resort = require('../models/resort')
 
 function index (req, res) {
@@ -56,10 +57,43 @@ function displayField (req, res) {
   })
 }
 
+function update (req, res) {
+  console.log('inside update method')
+  Resort.findById(req.params.id, function (err, resort) {
+    let updateField = req.params.fieldChange
+    resort[updateField] = req.body[updateField]
+    console.log('this is resort.resortName', resort.resortName)
+    console.log('this is updateField', updateField)
+    console.log('this is resort.updateField', resort.updateField)
+    console.log('just req.body', req.body)
+    console.log('This is req.body.updateField', req.body.updateField)
+    console.log('This is resort', resort)
+    Resort.create(resort)
+    res.redirect(`/resorts/${resort._id}`)
+  })
+}
+
+// function update (req, res) {
+//   let updateField = req.params.fieldChange
+//   let updateText = req.body[updateField]
+//   console.log('this is updateField', updateField)
+//   console.log('this is updateText', updateText)
+
+//   Resort.findByIdAndUpdate(
+//     req.params.id,
+//     { updateField: updateText },
+//     function (err, resort) {
+//       console.log('this is the new resort', resort)
+//     }
+//   )
+//   res.redirect(`/resorts/${resort._id}`)
+// }
+
 module.exports = {
   index,
   new: newResort,
   create,
   show,
-  displayField
+  displayField,
+  update
 }

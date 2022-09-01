@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser')
 var logger = require('morgan')
 var session = require('express-session')
 var passport = require('passport')
+var methodOverride = require('method-override')
 require('dotenv').config()
 require('./config/database')
 require('./config/passport')
@@ -26,7 +27,7 @@ server.use(logger('dev'))
 server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
 server.use(cookieParser())
-// server.use(methodOverride('_method'))
+server.use(methodOverride('_method'))
 
 server.use(
   session({

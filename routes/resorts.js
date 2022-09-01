@@ -17,4 +17,7 @@ router.get('/:id/:fieldChange', resortsCtrl.displayField)
 //POST the results of the input to the database
 router.post('/new/add', resortsCtrl.create)
 
+//PUT (update the existing information) for a resort based on what a user types in
+router.put('/:id/:fieldChange', resortsCtrl.update)
+
 module.exports = router
