@@ -26,6 +26,7 @@ A web application designed to help you plan your upcoming ski trips with helpful
 ## Getting Started:
 
 [Link to app](https://ski-planner-2.herokuapp.com/)
+
 [Link to Trello](https://trello.com/b/AzrYyyFy/project-2-ski-planner)
 
 ## App Screenshots:
@@ -45,14 +46,6 @@ Below: This page showcases additional details associated with the trip which are
 Below: A user may update the information they inputed regarding a planned ski trip by clicking on a hyperlink. In this example, a new input field will appear and allow the user to select a different start date for this trip.
 
 ![A screenshot showing player 1's victory through elimination of player 2's possible moves!](images/update.png)
-
-## Project Hurdles
-
-- One of the most challenging hurdles early on was developing a framework to organize all of the information (i.e., a piece class vs. a board class, creating methods for a class vs. creating independent functions). Once I came up with a way to structure the information by piece through the creation of a piece class, I could easily store attributes such as a piece's square location, its color, whether or not it had moves available, and whether or not it was a king.
-
-- The situation that took the most time to develop an algorithm for was the double+ jump. I wanted to create an algorithm which would allow for consecutive captures infinitely until there were no longer moves available. By adding conditions to the event listner placed on the board, I was able to continually call the showDoubleJumpPosition() method (which would show the available squares) until there were no longer moves available for that piece object.
-
-- Attention to detail was crucial throughout this project as I had to think of every possible scenario. This would all change if a piece was a king or if an object was on the first or last row of the board. Constantly testing the game to ensure I wasn't missing a possiblity was a very important part of overcoming the bugs I encountered along the way. One very helpful feature I added towards the end of the project was the initTest() function, which would render the board with fewer pieces, allowing me to test win scenarios more efficiently.
 
 ## Next steps:
 
