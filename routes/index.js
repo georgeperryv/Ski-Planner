@@ -13,7 +13,7 @@ router.get(
   passport.authenticate(
     //passport.authenticate returns a middleware function which coordinatres with Google's Oauth server
     'google', //specify that we want passport to use Google Strategy
-    { scope: ['profile', 'email'] }
+    { scope: ['profile', 'email'], prompt: 'select_account' }
   )
 ) //user will be presented the consent screen if they have not previously consented
 
