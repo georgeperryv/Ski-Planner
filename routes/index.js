@@ -20,7 +20,7 @@ router.get(
 // Google OAuth callback route
 router.get(
   // Google will call after the user confirms
-  '/oauth2callback',
+  '/auth/google/oauth2callback',
   passport.authenticate('google', {
     successRedirect: '/', //might have to put /ski here if not working (TAKE OUT LATER)
     failureRedirect: '/'
