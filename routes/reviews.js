@@ -6,11 +6,6 @@ const isLoggedIn = require('../config/auth')
 /* GET resorts list. */
 router.post('/:id/addReview', reviewsCtrl.create)
 
-// router.get('/new', resortsCtrl.new)
-//   res.render('resorts/new', { title: 'Resorts-Page' })
-// })
-
-//Delete
 router.delete('/:id', reviewsCtrl.delete)
 
 module.exports = router

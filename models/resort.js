@@ -27,15 +27,6 @@ const resortSchema = new Schema(
     startDate: {
       type: String,
       required: true
-      //   validate: {
-      //     validator: function (v) {
-      //       return (
-      //         v && v.getTime() > Date.now() + 24 * 60 * 60 * 1000 // check that there is a date object
-      //       )
-      //     },
-      //     message:
-      //       'An event must be at least 1 day from now and not more than 90 days.'
-      //   }
     },
     endDate: String,
     passUsed: String,

@@ -13,10 +13,12 @@ function newResort (req, res) {
     .slice(0, 10)
     .replace(/-/g, '-')
   console.log('this is todays date', todayDate)
-  res.render('resorts/new', { title: 'Add-Resort', todayDate })
+  res.render('resorts/new', { title: 'Add-Resort', todayDate }) //gives the new resort page the current date so it can be set as the min on the input field
 }
 
 function create (req, res) {
+  //creates a new destination
+  //the first part of this function (before the .then) creates a new Resort without any reviews, even if a review was entered on this page
   console.log('im inside create and this is the allReviews Array', allReviews)
   console.log('1) im in side create')
 
@@ -39,6 +41,8 @@ function create (req, res) {
     airport: req.body.airport
   })
     .then(function (result) {
+      //once a new resort is created without a review, this .then fucntion will find one document with the same name as what was inputed,
+      //get an array of all of the reviews associated with that resort, and add that array to the reviews of the new Resort we just created and passed into this .then
       console.log('1) the first result', result)
       Resort.findOne({ resortName: req.body.resortName }, function (
         err,
@@ -49,11 +53,12 @@ function create (req, res) {
         console.log('this is allREviews', allReviews)
         result.reviews = allReviews //should put all the reviews in the array
         console.log('this is the newest result', result)
-        result.save()
+        result.save() // This saves a new Resort which includes all of the new fields entered plus an array of all previous reviews for that resortName attached to the review key value
         return result
       })
     })
     .then(function (result) {
+      //Now all resorts with the same name should have all of the previous reviews. The below .then function adds the new review (if there is one) to all of the documents with the same resortName
       console.log('this is req.body.review', req.body.review)
       if (req.body.review) {
         console.log('2) this is the result passed in', result)
@@ -61,13 +66,13 @@ function create (req, res) {
           err,
           resort1
         ) {
-          // Add the user-centric info to req.body (the new review)
           console.log('this is resort1', resort1)
           resort1.forEach(element => {
+            //element will represent every document where that resortName matches the resortName of the document being created
             console.log('this is element', element)
             console.log('this is element._id', element.id)
-            // console.log('this is result._id', resort1.id)
             element.reviews.push({
+              //We will push a new review (the one being eneter right now) to every element where the names match
               content: String(req.body.review),
               rating: req.body.rating,
               user: req.user._id,
@@ -112,63 +117,19 @@ function update (req, res) {
   Resort.findById(req.params.id, function (err, resort) {
     let updateField = req.params.fieldChange
     resort[updateField] = req.body[updateField]
-    // console.log('this is resort.resortName', resort.resortName)
-    // console.log('this is updateField', updateField)
-    // console.log('this is resort.updateField', resort.updateField)
-    // console.log('just req.body', req.body)
-    // console.log('This is req.body.updateField', req.body.updateField)
-    // console.log('This is resort', resort)
     Resort.create(resort) //I think what is happening here is when I craete a new document with the same exact ID as the other
     //(but different parameters depending on what was typed), it replaces the old because there can't be two with the same Id
     res.redirect(`/resorts/${resort._id}`)
   })
 }
 
-// function update (req, res) {
-//   let updateField = req.params.fieldChange
-//   let updateText = req.body[updateField]
-//   console.log('this is updateField', updateField)
-//   console.log('this is updateText', updateText)
-
-//   Resort.findByIdAndUpdate(
-//     req.params.id,
-//     { updateField: updateText },
-//     function (err, resort) {
-//       console.log('this is the new resort', resort)
-//     }
-//   )
-//   res.redirect(`/resorts/${resort._id}`)
-// }
-
 function deleteResort (req, res) {
   console.log('im in resort')
   Resort.findOne({ _id: req.params.id }).then(function (resort) {
     resort.remove()
     res.redirect('/resorts')
-
-    //     const review = movie.reviews.id(req.params.id)
-    //     if (!review.user.equals(req.user._id))
-    //       return res.redirect(`/movies/${movie._id}`)
-    //     review.remove()
-    //     movie
-    //       .save()
-    //       .then(function () {
-    //         res.redirect(`/movies/${movie._id}`)
-    //       })
-    //       .catch(function (error) {
-    //         return next(error)
-    //       })
   })
 }
-
-// let reviewsArray = Resort.findOne(
-//     { resortName: req.body.resortName },
-//     function (err, existingResort) {
-//       allReviews.push(existingResort.reviews)
-//       console.log('this is allReviews', allReviews)
-//     }
-//   )
-//   await reviewsArray
 
 module.exports = {
   index,
