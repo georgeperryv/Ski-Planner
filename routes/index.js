@@ -8,21 +8,39 @@ router.get('/', function (req, res, next) {
 })
 
 //Google OAuth login route
+// router.get(
+//   '/auth/google',
+//   passport.authenticate(
+//     //passport.authenticate returns a middleware function which coordinatres with Google's Oauth server
+//     'google', //specify that we want passport to use Google Strategy
+//     { scope: ['profile', 'email'] }
+//   )
+// ) //user will be presented the consent screen if they have not previously consented
+
 router.get(
   '/auth/google',
-  passport.authenticate(
-    //passport.authenticate returns a middleware function which coordinatres with Google's Oauth server
-    'google', //specify that we want passport to use Google Strategy
-    { scope: ['profile', 'email'] }
-  )
-) //user will be presented the consent screen if they have not previously consented
+  passport.authenticate('google', {
+    scope: [
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/userinfo.email'
+    ]
+  })
+)
 
 // Google OAuth callback route
+// router.get(
+//   // Google will call after the user confirms
+//   '/auth/google/oauth2callback',
+//   passport.authenticate('google', {
+//     successRedirect: '/', //might have to put /ski here if not working (TAKE OUT LATER)
+//     failureRedirect: '/'
+//   })
+// )
+
 router.get(
-  // Google will call after the user confirms
   '/auth/google/oauth2callback',
   passport.authenticate('google', {
-    successRedirect: '/', //might have to put /ski here if not working (TAKE OUT LATER)
+    successRedirect: '/',
     failureRedirect: '/'
   })
 )
