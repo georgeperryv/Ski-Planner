@@ -1,8 +1,6 @@
 <%- include('../partials/header') %>
 <p>
-  Your upcoming trip to
-  <a href="/resorts/<%= resort._id%>/resortName %>"><%=resort.resortName%></a>
-  in
+  Your upcoming trip to <%=resort.resortName%> in
   <a href="/resorts/<%= resort._id%>/location %>"><%=resort.location%></a>
   is scheduled for
   <a href="/resorts/<%= resort._id%>/startDate %>"><%=resort.startDate%></a>
@@ -27,7 +25,7 @@
 <% if (resort.website !== '') { %>
 <label>Link to Website For More Information:</label>
 <a href="<%= resort.website %>">Website</a>
-<% } %> <% if (user) { %>
+<% } %> <% if (user) { %> <% if (updateField === 'startDate') { %>
 
 <form
   id="update"
@@ -35,10 +33,11 @@
   method="POST"
 >
   <label><%= updateField %>:</label>
-  <input type="text" name="<%=updateField%>" />
+  <input type="date" name="<%=updateField%>" min="<%=todayDate%>" />
   <button type="submit">Submit Destination</button>
 </form>
-<%}%> <% if (user) { %>
+
+<%}%> <%}%> <% if (user) { %>
 <form
   id="add-review-form"
   method="POST"

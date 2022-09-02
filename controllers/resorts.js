@@ -54,24 +54,30 @@ function create (req, res) {
       })
     })
     .then(function (result) {
-      console.log('2) this is the result passed in', result)
-      Resort.find({ resortName: req.body.resortName }, function (err, resort1) {
-        // Add the user-centric info to req.body (the new review)
-        console.log('this is resort1', resort1)
-        resort1.forEach(element => {
-          console.log('this is element', element)
-          console.log('this is element._id', element.id)
-          // console.log('this is result._id', resort1.id)
-          element.reviews.push({
-            content: String(req.body.review),
-            rating: req.body.rating,
-            user: req.user._id,
-            userName: req.user.name,
-            userAvatar: req.user.avatar
+      console.log('this is req.body.review', req.body.review)
+      if (req.body.review) {
+        console.log('2) this is the result passed in', result)
+        Resort.find({ resortName: req.body.resortName }, function (
+          err,
+          resort1
+        ) {
+          // Add the user-centric info to req.body (the new review)
+          console.log('this is resort1', resort1)
+          resort1.forEach(element => {
+            console.log('this is element', element)
+            console.log('this is element._id', element.id)
+            // console.log('this is result._id', resort1.id)
+            element.reviews.push({
+              content: String(req.body.review),
+              rating: req.body.rating,
+              user: req.user._id,
+              userName: req.user.name,
+              userAvatar: req.user.avatar
+            })
+            element.save(function (err) {})
           })
-          element.save(function (err) {})
         })
-      })
+      }
     })
 
   res.redirect('/resorts')
@@ -86,9 +92,18 @@ function show (req, res) {
 }
 
 function displayField (req, res) {
+  let todayDate = new Date() //https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript#:~:text=Use%20new%20Date()%20to,the%20current%20date%20and%20time.&text=This%20will%20give%20you%20today's,to%20whatever%20format%20you%20wish.
+    .toJSON()
+    .slice(0, 10)
+    .replace(/-/g, '-')
   Resort.findById(req.params.id, function (err, resort) {
     const updateField = req.params.fieldChange
-    res.render('resorts/update', { title: 'Update Page', resort, updateField })
+    res.render('resorts/update', {
+      title: 'Update Page',
+      resort,
+      updateField,
+      todayDate
+    })
   })
 }
 
