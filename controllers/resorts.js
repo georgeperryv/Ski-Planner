@@ -15,7 +15,8 @@ function newResort (req, res) {
   res.render('resorts/new', { title: 'Add-Resort', todayDate })
 }
 
-function create (req, res) {
+async function create (req, res) {
+  console.log('1) im in side create')
   //   const monthNames = [
   //     'January',
   //     'February',
@@ -50,25 +51,73 @@ function create (req, res) {
     budget: req.body.budget,
     website: req.body.website,
     transportation: req.body.transportation,
-    airport: req.body.airport,
-    reviews: [
-      //will need to find a way to make this happen only if there is a review written
-      {
-        content: req.body.review,
+    airport: req.body.airport
+    // reviews: [
+    //   //will need to find a way to make this happen only if there is a review written
+    //   {
+    //     content: req.body.review,
+    //     rating: req.body.rating,
+    //     user: req.user.id,
+    //     userName: req.user.name,
+    //     userAvatar: req.user.avatar
+    //   }
+    // ]
+  })
+  await skiMountain
+  //   Resort.findById(req.params.id, function (err, targetResort) {
+  //     resortName = targetResort.resortName
+  //     console.log('resortName', resortName)
+  console.log('1) skiMountain', skiMountain)
+  console.log('1) req.body.resortName', req.body.resortName)
+  Resort.find({ resortName: req.body.resortName }, function (err, resort) {
+    console.log('1) all resorts with the same name - should be array', resort)
+    // Add the user-centric info to req.body (the new review)
+    resort.forEach(element => {
+      console.log('1) each element', element)
+      console.log('1) type each element', typeof element)
+      console.log('1) req.body.review', req.body.review)
+      console.log('1) type req.body.review', typeof req.body.review)
+      console.log('1) req.user._id', req.user._id)
+      console.log('1) type req.user._id', typeof req.user._id)
+      console.log('1) req.user.name', req.user.name)
+      console.log('1) type req.user.name', typeof req.user.name)
+      console.log('1) req.user.avart', req.user.avatar)
+      console.log('1) type req.user.avatar', typeof req.user.avatar)
+
+      element.reviews.push({
+        content: String(req.body.review),
         rating: req.body.rating,
-        user: req.user.id,
+        user: req.user._id,
         userName: req.user.name,
         userAvatar: req.user.avatar
-      }
-    ]
-  })
+      })
+      element.save(function (err) {
+        console.log('inside save function')
+      })
+    })
+    //     console.log('all of the resorts with the name inputed', resort)
 
-  //   if (req.body.review) {
-  //     Resort.findById(req.params.id)
-  //     item.reviews.push(req.body.review)
-  //   }
-  console.log('this is resort', skiMountain)
-  res.redirect('/resorts')
+    //     req.body.user = req.user._id
+    //     req.body.userName = req.user.name
+    //     req.body.userAvatar = req.user.avatar
+
+    //     // Push the subdoc for the review
+    //     console.log('new review to be pushed', req.body)
+    //     resort.forEach(element => {
+    //       console.log('inside for Each', element.resortName)
+    //       element.reviews.push(req.body)
+    //       element.save(function (err) {})
+    //     })
+    //   })
+    //   })
+
+    //   if (req.body.review) {
+    //     Resort.findById(req.params.id)
+    //     item.reviews.push(req.body.review)
+    //   }
+    console.log('this is resort', skiMountain)
+    res.redirect('/resorts')
+  })
 }
 
 function show (req, res) {
