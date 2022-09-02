@@ -16,18 +16,6 @@ function newResort (req, res) {
   res.render('resorts/new', { title: 'Add-Resort', todayDate })
 }
 
-// function addReviews (req, res) {
-//   Resort.findOne({ resortName: req.body.resortName }, function (
-//     err,
-//     existingResort
-//   ) {
-//     console.log('this is the existingResorts reviews', existingResort)
-//     allReviews = existingResort.reviews
-//     console.log('this is allREviews', allReviews)
-//   })
-//   res.redirect('/resorts/new/add2')
-// }
-
 function create (req, res) {
   console.log('im inside create and this is the allReviews Array', allReviews)
   console.log('1) im in side create')
@@ -48,19 +36,7 @@ function create (req, res) {
     budget: req.body.budget,
     website: req.body.website,
     transportation: req.body.transportation,
-    airport: req.body.airport,
-    reviews: []
-    // reviews: allReviews
-    // reviews: [
-    //   //will need to find a way to make this happen only if there is a review written
-    //   {
-    //     content: req.body.review,
-    //     rating: req.body.rating,
-    //     user: req.user.id,
-    //     userName: req.user.name,
-    //     userAvatar: req.user.avatar
-    //   }
-    // ]
+    airport: req.body.airport
   })
     .then(function (result) {
       console.log('1) the first result', result)
@@ -73,7 +49,7 @@ function create (req, res) {
         console.log('this is allREviews', allReviews)
         result.reviews = allReviews //should put all the reviews in the array
         console.log('this is the newest result', result)
-        result.save(function (err) {})
+        result.save()
         return result
       })
     })
@@ -85,58 +61,19 @@ function create (req, res) {
         resort1.forEach(element => {
           console.log('this is element', element)
           console.log('this is element._id', element.id)
-          console.log('this is result._id', resort1.id)
-          if (element._id !== result._id) {
-            element.reviews.push({
-              content: String(req.body.review),
-              rating: req.body.rating,
-              user: req.user._id,
-              userName: req.user.name,
-              userAvatar: req.user.avatar
-            })
-          }
+          // console.log('this is result._id', resort1.id)
+          element.reviews.push({
+            content: String(req.body.review),
+            rating: req.body.rating,
+            user: req.user._id,
+            userName: req.user.name,
+            userAvatar: req.user.avatar
+          })
           element.save(function (err) {})
         })
       })
     })
 
-  //   Resort.findById(req.params.id, function (err, targetResort) {
-  //     resortName = targetResort.resortName
-  //     console.log('resortName', resortName)
-
-  Resort.find({ resortName: req.body.resortName }, function (err, resort) {
-    // Add the user-centric info to req.body (the new review)
-    resort.forEach(element => {
-      element.reviews.push({
-        content: String(req.body.review),
-        rating: req.body.rating,
-        user: req.user._id,
-        userName: req.user.name,
-        userAvatar: req.user.avatar
-      })
-      element.save(function (err) {})
-    })
-    //     console.log('all of the resorts with the name inputed', resort)
-
-    //     req.body.user = req.user._id
-    //     req.body.userName = req.user.name
-    //     req.body.userAvatar = req.user.avatar
-
-    //     // Push the subdoc for the review
-    //     console.log('new review to be pushed', req.body)
-    //     resort.forEach(element => {
-    //       console.log('inside for Each', element.resortName)
-    //       element.reviews.push(req.body)
-    //       element.save(function (err) {})
-    //     })
-    //   })
-    //   })
-
-    //   if (req.body.review) {
-    //     Resort.findById(req.params.id)
-    //     item.reviews.push(req.body.review)
-    //   }
-  })
   res.redirect('/resorts')
 }
 
@@ -225,5 +162,5 @@ module.exports = {
   show,
   displayField,
   update,
-  delete: deleteResort.apply
+  delete: deleteResort
 }
