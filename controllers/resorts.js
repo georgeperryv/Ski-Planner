@@ -1,4 +1,5 @@
 const Resort = require('../models/resort')
+let allReviews = []
 
 function index (req, res) {
   Resort.find({}, function (err, resortList) {
@@ -15,30 +16,26 @@ function newResort (req, res) {
   res.render('resorts/new', { title: 'Add-Resort', todayDate })
 }
 
-async function create (req, res) {
+// function addReviews (req, res) {
+//   Resort.findOne({ resortName: req.body.resortName }, function (
+//     err,
+//     existingResort
+//   ) {
+//     console.log('this is the existingResorts reviews', existingResort)
+//     allReviews = existingResort.reviews
+//     console.log('this is allREviews', allReviews)
+//   })
+//   res.redirect('/resorts/new/add2')
+// }
+
+function create (req, res) {
+  console.log('im inside create and this is the allReviews Array', allReviews)
   console.log('1) im in side create')
-  //   const monthNames = [
-  //     'January',
-  //     'February',
-  //     'March',
-  //     'April',
-  //     'May',
-  //     'June',
-  //     'July',
-  //     'August',
-  //     'September',
-  //     'October',
-  //     'November',
-  //     'December'
-  //   ]
-  //   console.log('this is req.body.startDate', req.body.startDate)
-  //   let startDateTotal = new Date(req.body.startDate) //date object
-  //   console.log('the current month is ' + monthNames[startDateTotal.getMonth()])   could do this if you would rather have a full month
+
   let stringStartDate = String(req.body.startDate)
   let stringEndDate = String(req.body.endDate)
-  //   let justStartDate = stringStartDateTotal.substring(0, 15)
-  //   console.log('this is justStardDate', justStartDate)
-  const hasReview = req.body.review
+
+  //   const hasReview = req.body.review
   let skiMountain = Resort.create({
     user: req.user.id,
     userName: req.user.name,
@@ -51,7 +48,9 @@ async function create (req, res) {
     budget: req.body.budget,
     website: req.body.website,
     transportation: req.body.transportation,
-    airport: req.body.airport
+    airport: req.body.airport,
+    reviews: []
+    // reviews: allReviews
     // reviews: [
     //   //will need to find a way to make this happen only if there is a review written
     //   {
@@ -63,27 +62,43 @@ async function create (req, res) {
     //   }
     // ]
   })
-  await skiMountain
+    .then(function (result) {
+      Resort.findOne({ resortName: req.body.resortName }, function (
+        err,
+        existingResort
+      ) {
+        console.log('this is the existingResorts reviews', existingResort)
+        allReviews = existingResort.reviews
+        console.log('this is allREviews', allReviews)
+        result.reviews = allReviews //should put all the reviews in the array
+        console.log('this is the newest result', result)
+        result.save(function (err) {})
+      })
+    })
+    .then(function (result) {
+      Resort.find({ resortName: req.body.resortName }, function (err, resort1) {
+        // Add the user-centric info to req.body (the new review)
+        console.log('this is resort1', resort1)
+        resort1.forEach(element => {
+          element.reviews.push({
+            content: String(req.body.review),
+            rating: req.body.rating,
+            user: req.user._id,
+            userName: req.user.name,
+            userAvatar: req.user.avatar
+          })
+          element.save(function (err) {})
+        })
+      })
+    })
+
   //   Resort.findById(req.params.id, function (err, targetResort) {
   //     resortName = targetResort.resortName
   //     console.log('resortName', resortName)
-  console.log('1) skiMountain', skiMountain)
-  console.log('1) req.body.resortName', req.body.resortName)
+
   Resort.find({ resortName: req.body.resortName }, function (err, resort) {
-    console.log('1) all resorts with the same name - should be array', resort)
     // Add the user-centric info to req.body (the new review)
     resort.forEach(element => {
-      console.log('1) each element', element)
-      console.log('1) type each element', typeof element)
-      console.log('1) req.body.review', req.body.review)
-      console.log('1) type req.body.review', typeof req.body.review)
-      console.log('1) req.user._id', req.user._id)
-      console.log('1) type req.user._id', typeof req.user._id)
-      console.log('1) req.user.name', req.user.name)
-      console.log('1) type req.user.name', typeof req.user.name)
-      console.log('1) req.user.avart', req.user.avatar)
-      console.log('1) type req.user.avatar', typeof req.user.avatar)
-
       element.reviews.push({
         content: String(req.body.review),
         rating: req.body.rating,
@@ -91,9 +106,7 @@ async function create (req, res) {
         userName: req.user.name,
         userAvatar: req.user.avatar
       })
-      element.save(function (err) {
-        console.log('inside save function')
-      })
+      element.save(function (err) {})
     })
     //     console.log('all of the resorts with the name inputed', resort)
 
@@ -115,9 +128,8 @@ async function create (req, res) {
     //     Resort.findById(req.params.id)
     //     item.reviews.push(req.body.review)
     //   }
-    console.log('this is resort', skiMountain)
-    res.redirect('/resorts')
   })
+  res.redirect('/resorts')
 }
 
 function show (req, res) {
@@ -189,6 +201,15 @@ function deleteResort (req, res) {
   })
 }
 
+// let reviewsArray = Resort.findOne(
+//     { resortName: req.body.resortName },
+//     function (err, existingResort) {
+//       allReviews.push(existingResort.reviews)
+//       console.log('this is allReviews', allReviews)
+//     }
+//   )
+//   await reviewsArray
+
 module.exports = {
   index,
   new: newResort,
@@ -196,5 +217,5 @@ module.exports = {
   show,
   displayField,
   update,
-  delete: deleteResort
+  delete: deleteResort.apply
 }

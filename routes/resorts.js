@@ -15,8 +15,11 @@ router.get('/:id', isLoggedIn, resortsCtrl.show)
 //GET the detail/update page with an update box for whatever was clicked
 router.get('/:id/:fieldChange', isLoggedIn, resortsCtrl.displayField)
 
-//POST the results of the input to the database
+//POST all of the reviews to the reviews array of the new resort
 router.post('/new/add', isLoggedIn, resortsCtrl.create)
+
+//POST the results of the input to the database
+// router.post('/new/add2', isLoggedIn, resortsCtrl.create)
 
 //PUT (update the existing information) for a resort based on what a user types in
 router.put('/:id/:fieldChange', isLoggedIn, resortsCtrl.update)
