@@ -63,6 +63,7 @@ function create (req, res) {
     // ]
   })
     .then(function (result) {
+      console.log('1) the first result', result)
       Resort.findOne({ resortName: req.body.resortName }, function (
         err,
         existingResort
@@ -73,20 +74,27 @@ function create (req, res) {
         result.reviews = allReviews //should put all the reviews in the array
         console.log('this is the newest result', result)
         result.save(function (err) {})
+        return result
       })
     })
     .then(function (result) {
+      console.log('2) this is the result passed in', result)
       Resort.find({ resortName: req.body.resortName }, function (err, resort1) {
         // Add the user-centric info to req.body (the new review)
         console.log('this is resort1', resort1)
         resort1.forEach(element => {
-          element.reviews.push({
-            content: String(req.body.review),
-            rating: req.body.rating,
-            user: req.user._id,
-            userName: req.user.name,
-            userAvatar: req.user.avatar
-          })
+          console.log('this is element', element)
+          console.log('this is element._id', element.id)
+          console.log('this is result._id', resort1.id)
+          if (element._id !== result._id) {
+            element.reviews.push({
+              content: String(req.body.review),
+              rating: req.body.rating,
+              user: req.user._id,
+              userName: req.user.name,
+              userAvatar: req.user.avatar
+            })
+          }
           element.save(function (err) {})
         })
       })
