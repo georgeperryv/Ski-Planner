@@ -26,8 +26,26 @@ function create (req, res) {
   res.redirect(`/resorts/${req.params.id}`)
 }
 
+function deleteReview (req, res, next) {
+  Resort.findOne({ 'reviews._id': req.params.id }).then(function (resort) {
+    const review = resort.reviews.id(req.params.id)
+    if (!review.user.equals(req.user._id))
+      return res.redirect(`/resorts/${resort._id}`)
+    review.remove()
+    resort
+      .save()
+      .then(function () {
+        res.redirect(`/resorts/${resort._id}`)
+      })
+      .catch(function (error) {
+        return next(error)
+      })
+  })
+}
+
 // Always save the top-level document (not subdocs)
 
 module.exports = {
-  create
+  create,
+  delete: deleteReview
 }

@@ -10,4 +10,7 @@ router.post('/:id/addReview', reviewsCtrl.create)
 //   res.render('resorts/new', { title: 'Resorts-Page' })
 // })
 
+//Delete
+router.delete('/:id', reviewsCtrl.delete)
+
 module.exports = router
