@@ -27,12 +27,13 @@
 <label>Link to Website For More Information:</label>
 <a href="<%= resort.website %>">Website</a>
 <% } %> <% if (user) { %>
+
+<!-- Adding a new review -->
 <form
   id="add-review-form"
   method="POST"
   action="/reviews/<%= resort._id %>/addReview"
 >
-  <!-- Adding a new review -->
   <label>Review:</label>
   <textarea name="content"></textarea>
   <label>Rating:</label>
